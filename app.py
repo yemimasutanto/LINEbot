@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+from random import randint
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -65,6 +66,11 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat mail'))
     if text=="djohan":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat djohan'))
+    a=(randint(0, 9))
+    if a%2:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Iya'))
+    else:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Tidak'))
 
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Halo '+profile.display_name+'\nKata Kunci Tidak Diketahui :) \nKetik "menu" untuk mengetahui menu yang tersedia'))
 
