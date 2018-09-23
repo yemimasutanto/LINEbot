@@ -30,12 +30,12 @@ from linebot.models import (
     FlexSendMessage, BubbleContainer, ImageComponent, BoxComponent,
     TextComponent, SpacerComponent, IconComponent, ButtonComponent,
     SeparatorComponent,
-) //importlibrary
+)
 
 app = Flask(__name__)
 
 # Channel Access Token
-line_bot_api = LineBotApi('xSgxrRHDxZ0iKR0EAuNSpL5i/VDWfDu3DfhNDJmoduR+vnaWQOLiZeEWPrdFAe+TLTjfxtOIv2tjclIJHQWCktyWr9xydHMU32Qk8q9eIgtdFNgzlqW0DJAOXzHBNJem1O/s3YNiUqb7lZW77BXnrAdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('HmwS2JXV8cCN2ELqDn11oK42hRhJVm4Q7uJWNGtsPlNzBOdJSWoEP+uiz5xSvXUsLTjfxtOIv2tjclIJHQWCktyWr9xydHMU32Qk8q9eIguE9nzfXbAGaL+gA+bgAOZpwd60y8KCIOhG1UCgD0picwdB04t89/1O/w1cDnyilFU=')
 # Channel Secret
 handler = WebhookHandler('98b04078567eee1858d9e4f0d741948d')
 #===========[ NOTE SAVER ]=======================
@@ -52,7 +52,7 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-//eksekusi
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text #simplify for receove message
