@@ -64,8 +64,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat adit'))
     if text=="mail":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat mail'))
-    if text=="djohan":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat djohan'))
+    if text=="kana":
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Putusin Kana'))
     a=(randint(0, 9))
     if a%2:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Iya'))
