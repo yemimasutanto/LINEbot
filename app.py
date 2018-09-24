@@ -61,7 +61,7 @@ def handle_message(event):
     gid = event.source.sender_id #get group_id
     profile = line_bot_api.get_profile(sender)
     
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat '+text))
+    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat '+text))
     #if text=="mail":
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat mail'))
     if text=="kana" or "hans":
