@@ -150,25 +150,25 @@ def callback():
         abort(400)
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    text = event.message.text #simplify for receove message
-    sender = event.source.user_id #get usesenderr_id
-    gid = event.source.sender_id #get group_id
-    profile = line_bot_api.get_profile(sender)
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     text = event.message.text #simplify for receove message
+#     sender = event.source.user_id #get usesenderr_id
+#     gid = event.source.sender_id #get group_id
+#     profile = line_bot_api.get_profile(sender)
     
-    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat '+text))
-    #if text=="mail":
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat mail'))
-    if text=="kana" or text=="hans":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu tega, '+text))
-    #a=(randint(0, 9))
-    #if a%2:
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Iya'))
-    #else:
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Tidak'))
+#     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat '+text))
+#     #if text=="mail":
+#         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu jahat mail'))
+#     if text=="kana" or text=="hans":
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Kamu tega, '+text))
+#     #a=(randint(0, 9))
+#     #if a%2:
+#         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Iya'))
+#     #else:
+#         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Tidak'))
 
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Halo '+profile.display_name+'\n'+text+' juga :)'))
+#     line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Halo '+profile.display_name+'\n'+text+' juga :)'))
 
 import os
 if __name__ == "__main__":
