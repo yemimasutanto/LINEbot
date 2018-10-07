@@ -44,7 +44,7 @@ notes = {}
 
 # #REQUEST DATA MHS
 def carimhs(nrp):
-    URLmhs = "http://www.aditmasih.tk/api-hafid/show.php?nrp=" + nrp
+    URLmhs = "http://www.aditmasih.tk/api_kelompok2/show.php?nrp=" + nrp
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
@@ -52,12 +52,12 @@ def carimhs(nrp):
     flag = data['flag']
     if(flag == "1"):
         nrp = data['data_angkatan'][0]['nrp']
-        nama = data['data_angkatan'][0]['nama']
-        kos = data['data_angkatan'][0]['kosan']
+        nama = data['data_angkatan'][0]['name']
+        kos = data['data_angkatan'][0]['alamat']
 
         # munculin semua, ga rapi, ada 'u' nya
         # all_data = data['data_angkatan'][0]
-        data= "Nama : "+nama+"\nNrp : "+nrp+"\nKosan : "+kos
+        data= "Nama : "+name+"\nNrp : "+nrp+"\nAlamat : "+alamat
         return data
         # return all_data
 
@@ -77,7 +77,7 @@ def inputmhs(nrp, name, alamat):
         return 'Data gagal dimasukkan\n'
 
 # def allmhs():
-    r = requests.post("http://www.aditmasih.tk/api-hafid/all.php")
+    r = requests.post("http://www.aditmasih.tk/api_kelompok2/all.php")
     data = r.json()
 
     flag = data['flag']
@@ -86,15 +86,15 @@ def inputmhs(nrp, name, alamat):
         hasil = ""
         for i in range(0,len(data['data_angkatan'])):
             nrp = data['data_angkatan'][int(i)][0]
-            nama = data['data_angkatan'][int(i)][2]
-            kos = data['data_angkatan'][int(i)][4]
+            name = data['data_angkatan'][int(i)][2]
+            alamat = data['data_angkatan'][int(i)][4]
             hasil=hasil+str(i+1)
             hasil=hasil+".\nNrp : "
             hasil=hasil+nrp
             hasil=hasil+"\nNama : "
-            hasil=hasil+nama
-            hasil=hasil+"\nKosan : "
-            hasil=hasil+kos
+            hasil=hasil+name
+            hasil=hasil+"\nAlamat : "
+            hasil=hasil+alamat
             hasil=hasil+"\n"
         return hasil
     elif(flag == "0"):
@@ -102,7 +102,7 @@ def inputmhs(nrp, name, alamat):
 
 # #DELETE DATA MHS
 def hapusmhs(nrp):
-    r = requests.post("http://www.aditmasih.tk/api-hafid/delete.php", data={'nrp': nrp})
+    r = requests.post("http://www.aditmasih.tk/api_kelompok2/delete.php", data={'nrp': nrp})
     data = r.json()
 
     flag = data['flag']
@@ -113,14 +113,14 @@ def hapusmhs(nrp):
         return 'Data gagal dihapus\n'
 
 # def updatemhs(nrpLama,nrp,nama,kosan):
-    URLmhs = "http://www.aditmasih.tk/api-hafid/show.php?nrp=" + nrpLama
+    URLmhs = "http://www.aditmasih.tk/api_kelompok2/show.php?nrp=" + nrpLama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api-hafid/update.php", data={'nrp': nrp, 'nama': nama, 'kosan': kosan, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_kelompok2/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
@@ -160,10 +160,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusmhs(data[1])))
     elif(data[0]=='ganti'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updatemhs(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='semwa'):
+    elif(data[0]=='semua'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=allsmhs()))
     elif(data[0]=='menu'):
-        menu = "1. lihat-[nrp]\n2. tambah-[nrp]-[nama]-[kosan]\n3. hapus-[nrp]\n4. ganti-[nrp lama]-[nrp baru]-[nama baru]-[kosan baru]\n5. semwa"
+        menu = "1. lihat-[nrp]\n2. tambah-[nrp]-[name]-[alamat]\n3. hapus-[nrp]\n4. ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. semua"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 
