@@ -36,11 +36,107 @@ from linebot.models import (
 app = Flask(__name__)
 
 # Channel Access Token
-line_bot_api = LineBotApi('fmH+drnG5YXI9xVPwQpnZmKeKyBTokz/9VZjJxh9jE8MPnT2awlwKQGbFTwXvTCDLTjfxtOIv2tjclIJHQWCktyWr9xydHMU32Qk8q9eIgvDo7gnEmsBs5GWtVyqxyq/dKWesx+5hfFlbIcEOSEO8wdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('AisO8Gpl/tiIuYoM5r/fQixdYKstIuP1xJH4lsrAxfX6d46ESGwQyC5c1OXypTjNLTjfxtOIv2tjclIJHQWCktyWr9xydHMU32Qk8q9eIguProRzi9NKoBQPhyTtYUKa2ykCue7iP9tqztRVIXyVcQdB04t89/1O/w1cDnyilFU=')
 # Channel Secret
-handler = WebhookHandler('8cf24b029b867346494325781f75f30f')
+handler = WebhookHandler('a61ddb69c1ec8893792072096bd7ef02')
 #===========[ NOTE SAVER ]=======================
 notes = {}
+
+#REQUEST DATA MHS
+def carimhs(nrp):
+    URLmhs = "http://www.aditmasih.tk/api-hafid/show.php?nrp=" + nrp
+    r = requests.get(URLmhs)
+    data = r.json()
+    err = "data tidak ditemukan"
+    
+    flag = data['flag']
+    if(flag == "1"):
+        nrp = data['data_angkatan'][0]['nrp']
+        nama = data['data_angkatan'][0]['nama']
+        kos = data['data_angkatan'][0]['kosan']
+
+        # munculin semua, ga rapi, ada 'u' nya
+        # all_data = data['data_angkatan'][0]
+        data= "Nama : "+nama+"\nNrp : "+nrp+"\nKosan : "+kos
+        return data
+        # return all_data
+
+    elif(flag == "0"):
+        return err
+
+#INPUT DATA MHS buat di app.py
+def inputmhs(nrp, nama, kosan):
+    r = requests.post("http://www.aditmasih.tk/[api-masing2]/insert.php", data={'nrp': nrp, 'nama': nama, 'kosan': kosan})
+    data = r.json()
+
+    flag = data['flag']
+   
+    if(flag == "1"):
+        return 'Data '+nama+' berhasil dimasukkan\n'
+    elif(flag == "0"):
+        return 'Data gagal dimasukkan\n'
+
+def handle_message(event):
+
+data=text.split('-')
+if(data[0]=='tambah'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputmhs(data[1],data[2],data[3])))
+
+def allmhs():
+    r = requests.post("http://www.aditmasih.tk/api-hafid/all.php")
+    data = r.json()
+
+    flag = data['flag']
+   
+    if(flag == "1"):
+        hasil = ""
+        for i in range(0,len(data['data_angkatan'])):
+            nrp = data['data_angkatan'][int(i)][0]
+            nama = data['data_angkatan'][int(i)][2]
+            kos = data['data_angkatan'][int(i)][4]
+            hasil=hasil+str(i+1)
+            hasil=hasil+".\nNrp : "
+            hasil=hasil+nrp
+            hasil=hasil+"\nNama : "
+            hasil=hasil+nama
+            hasil=hasil+"\nKosan : "
+            hasil=hasil+kos
+            hasil=hasil+"\n"
+        return hasil
+    elif(flag == "0"):
+        return 'Data gagal dimasukkan\n'
+
+#DELETE DATA MHS
+def hapusmhs(nrp):
+    r = requests.post("http://www.aditmasih.tk/api-hafid/delete.php", data={'nrp': nrp})
+    data = r.json()
+
+    flag = data['flag']
+   
+    if(flag == "1"):
+        return 'Data '+nrp+' berhasil dihapus\n'
+    elif(flag == "0"):
+        return 'Data gagal dihapus\n'
+
+def updatemhs(nrpLama,nrp,nama,kosan):
+    URLmhs = "http://www.aditmasih.tk/api-hafid/show.php?nrp=" + nrpLama
+    r = requests.get(URLmhs)
+    data = r.json()
+    err = "data tidak ditemukan"
+    nrp_lama=nrpLama
+    flag = data['flag']
+    if(flag == "1"):
+        r = requests.post("http://www.aditmasih.tk/api-hafid/update.php", data={'nrp': nrp, 'nama': nama, 'kosan': kosan, 'nrp_lama':nrp_lama})
+        data = r.json()
+        flag = data['flag']
+
+        if(flag == "1"):
+            return 'Data '+nrp_lama+'berhasil diupdate\n'
+        elif(flag == "0"):
+            return 'Data gagal diupdate\n'
+
+    elif(flag == "0"):
+        return err
 
 # Post Request
 @app.route("/callback", methods=['POST'])
