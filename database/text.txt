@@ -1,0 +1,13 @@
+create TABLE api(
+	nrp CHAR(5) primary key,
+	name VARCHAR(50)NOT NULL,
+	alamat varchar(100)
+);
+
+insert into nama_tabel(nrp, name, alamat)
+VALUES('17049', 'kamu siapa', 'dimana mana');
+
+//file manager
+
+dipisah --> data=text.split('-')
+if(data[0]=='lihat')dll

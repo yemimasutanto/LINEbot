@@ -17,6 +17,7 @@ import sys, random
 import tempfile
 import requests
 import re
+import requests, json
 
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
@@ -44,7 +45,7 @@ notes = {}
 
 # #REQUEST DATA ADMIN RPL
 def cariadmin(nrp):
-    URLmhs = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
+    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
     r = requests.get(URLadmin)
     data = r.json()
     err = "data tidak ditemukan"
