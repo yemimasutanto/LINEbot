@@ -42,57 +42,57 @@ handler = WebhookHandler('a61ddb69c1ec8893792072096bd7ef02')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-# #REQUEST DATA MHS
-def carimhs(nrp):
-    URLmhs = "http://www.aditmasih.tk/api_kelompok2/show.php?nrp=" + nrp
-    r = requests.get(URLmhs)
+# #REQUEST DATA ADMIN RPL
+def cariadmin(nrp):
+    URLmhs = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
+    r = requests.get(URLadmin)
     data = r.json()
     err = "data tidak ditemukan"
     
     flag = data['flag']
     if(flag == "1"):
-        nrp = data['data_angkatan'][0]['nrp']
-        nama = data['data_angkatan'][0]['name']
-        kos = data['data_angkatan'][0]['alamat']
+        nrp = data['data_admin'][0]['nrp']
+        nama = data['data_admin'][0]['nama']
+        alamat = data['data_admin'][0]['alamat']
 
         # munculin semua, ga rapi, ada 'u' nya
         # all_data = data['data_angkatan'][0]
-        data= "Nama : "+name+"\nNrp : "+nrp+"\nAlamat : "+alamat
+        data= "Nama : "+nama+"\nNrp : "+nrp+"\nAlamat : "+alamat
         return data
         # return all_data
 
     elif(flag == "0"):
         return err
 
-#INPUT DATA MHS buat di app.py
-def inputmhs(nrp, name, alamat):
-    r = requests.post("http://www.aditmasih.tk/api_kelompok2/insert.php", data={'nrp': nrp, 'name': name, 'alamat': alamat})
+#INPUT DATA ADMIN RPL buat di app.py
+def inputadmin(nrp, nama, alamat):
+    r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'NRP': nrp, 'Nama': nama, 'Alamat': alamat})
     data = r.json()
 
     flag = data['flag']
    
     if(flag == "1"):
-        return 'Data '+name+' berhasil dimasukkan\n'
+        return 'Data '+nama+' berhasil dimasukkan\n'
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# def allmhs():
-    r = requests.post("http://www.aditmasih.tk/api_kelompok2/all.php")
+# def alladmin():
+    r = requests.post("http://www.aditmasih.tk/api_yemima/all.php")
     data = r.json()
 
     flag = data['flag']
    
     if(flag == "1"):
         hasil = ""
-        for i in range(0,len(data['data_angkatan'])):
-            nrp = data['data_angkatan'][int(i)][0]
-            name = data['data_angkatan'][int(i)][2]
-            alamat = data['data_angkatan'][int(i)][4]
+        for i in range(0,len(data['data_admin'])):
+            nrp = data['data_admin'][int(i)][0]
+            nama = data['data_admin'][int(i)][2]
+            alamat = data['data_admin'][int(i)][4]
             hasil=hasil+str(i+1)
-            hasil=hasil+".\nNrp : "
+            hasil=hasil+".\nNRP : "
             hasil=hasil+nrp
             hasil=hasil+"\nNama : "
-            hasil=hasil+name
+            hasil=hasil+nama
             hasil=hasil+"\nAlamat : "
             hasil=hasil+alamat
             hasil=hasil+"\n"
@@ -100,9 +100,9 @@ def inputmhs(nrp, name, alamat):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# #DELETE DATA MHS
-def hapusmhs(nrp):
-    r = requests.post("http://www.aditmasih.tk/api_kelompok2/delete.php", data={'nrp': nrp})
+# #DELETE DATA ADMIN RPL
+def hapusadmin(nrp):
+    r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'NRP': nrp})
     data = r.json()
 
     flag = data['flag']
@@ -112,15 +112,15 @@ def hapusmhs(nrp):
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
 
-# def updatemhs(nrpLama,nrp,nama,kosan):
-    URLmhs = "http://www.aditmasih.tk/api_kelompok2/show.php?nrp=" + nrpLama
-    r = requests.get(URLmhs)
+# def updateadmin(nrpLama,nrp,nama,alamat):
+    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
+    r = requests.get(URLadmin)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_kelompok2/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'NRP': nrp, 'Nama': nama, 'Alamat': alamat, 'NRP_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
@@ -153,17 +153,17 @@ def handle_message(event):
    
     data=text.split('-')
     if(data[0]=='tambah'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputmhs(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputadmin(data[1],data[2],data[3])))
     elif(data[0]=='lihat'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=carimhs(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cariadmin(data[1])))
     elif(data[0]=='hapus'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusmhs(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusadmin(data[1])))
     elif(data[0]=='ganti'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updatemhs(data[1],data[2],data[3],data[4])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updateadmin(data[1],data[2],data[3],data[4])))
     elif(data[0]=='semua'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=allsmhs()))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=allsadmin()))
     elif(data[0]=='menu'):
-        menu = "1. lihat-[nrp]\n2. tambah-[nrp]-[name]-[alamat]\n3. hapus-[nrp]\n4. ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. semua"
+        menu = "1. lihat-[nrp]\n2. tambah-[nrp]-[nama]-[jadwal]\n3. hapus-[nrp]\n4. ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. semua"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 
