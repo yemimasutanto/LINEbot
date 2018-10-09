@@ -5,7 +5,7 @@
 
 		$user_id = $_POST['nrp'];
 		$nama = $_POST['nama'];
-		$kosan = $_POST['alamat'];
+		$alamat = $_POST['alamat'];
         $nrp_lama = $_POST['nrp_lama'];
 		$queryResult = $conn->query("UPDATE `api_yemima` SET nrp = '$user_id', nama = '$nama', alamat = '$alamat' WHERE nrp ='$nrp_lama'");
         if($queryResult==true)

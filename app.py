@@ -77,7 +77,7 @@ def inputadmin(nrp, nama, alamat):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# def alladmin():
+def alladmin():
     r = requests.post("http://www.aditmasih.tk/api_yemima/all.php")
     data = r.json()
 

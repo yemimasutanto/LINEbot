@@ -9,6 +9,6 @@
       die("error in connection");
      }
      else{
-            echo("mashok");
+            //echo("mashok");
      }
 ?>

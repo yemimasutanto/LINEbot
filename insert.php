@@ -1,14 +1,14 @@
 <?php
 	include('conn.php');
 
-	if (!empty($_POST['nrp']) && !empty($_POST['nama']) && !empty($_POST['kosan'])) {
+	if (!empty($_POST['nrp']) && !empty($_POST['nama']) && !empty($_POST['alamat'])) {
 
 		$user_id = $_POST['nrp'];
 		$nama = $_POST['nama'];
-		$kosan = $_POST['kosan'];
+		$alamat = $_POST['alamat'];
         
         
-		$queryResult = $conn->query("INSERT INTO `api-hafid` (nrp, nama, kosan) VALUES ('$user_id', '$nama', '$kosan')");
+		$queryResult = $conn->query("INSERT INTO `api_yemima` (nrp, nama, alamat) VALUES ('$user_id', '$nama', '$alamat')");
 
 		echo json_encode(array( 'flag'=>"1" ), JSON_PRETTY_PRINT);
 	}
