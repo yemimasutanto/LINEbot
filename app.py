@@ -153,15 +153,15 @@ def handle_message(event):
     profile = line_bot_api.get_profile(sender)
    
     data=text.split('-')
-    if(data[0]=='tambah'):
+    if(data[0]=='Tambah'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputadmin(data[1],data[2],data[3])))
-    elif(data[0]=='lihat'):
+    elif(data[0]=='Lihat'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cariadmin(data[1])))
-    elif(data[0]=='hapus'):
+    elif(data[0]=='Hapus'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusadmin(data[1])))
-    elif(data[0]=='ganti'):
+    elif(data[0]=='Ganti'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updateadmin(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='semua'):
+    elif(data[0]=='Semua'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
         menu = "1. Lihat-[nrp]\n2. Tambah-[nrp]-[nama]-[alamat]\n3. Hapus-[nrp]\n4. Ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. Semua "
