@@ -52,9 +52,9 @@ def cariadmin(nrp):
     
     flag = data['flag']
     if(flag == "1"):
-        nrp = data['data_admin'][0]['nrp']
-        nama = data['data_admin'][0]['nama']
-        alamat = data['data_admin'][0]['alamat']
+        nrp = data['api_yemima'][0]['nrp']
+        nama = data['api_yemima'][0]['nama']
+        alamat = data['api_yemima'][0]['alamat']
 
         # munculin semua, ga rapi, ada 'u' nya
         # all_data = data['data_angkatan'][0]
@@ -85,10 +85,10 @@ def alladmin():
    
     if(flag == "1"):
         hasil = ""
-        for i in range(0,len(data['data_admin'])):
-            nrp = data['data_admin'][int(i)][0]
-            nama = data['data_admin'][int(i)][2]
-            alamat = data['data_admin'][int(i)][4]
+        for i in range(0,len(data['api_yemima'])):
+            nrp = data['api_yemima'][int(i)][0]
+            nama = data['api_yemima'][int(i)][2]
+            alamat = data['api_yemima'][int(i)][4]
             hasil=hasil+str(i+1)
             hasil=hasil+".\nNRP : "
             hasil=hasil+nrp
