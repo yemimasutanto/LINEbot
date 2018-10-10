@@ -113,7 +113,7 @@ def hapusadmin(nrp):
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
 
-# def updateadmin(nrpLama,nrp,nama,alamat):
+def updateadmin(nrpLama,nrp,nama,alamat):
     URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
     r = requests.get(URLadmin)
     data = r.json()
@@ -162,7 +162,7 @@ def handle_message(event):
     elif(data[0]=='ganti'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updateadmin(data[1],data[2],data[3],data[4])))
     elif(data[0]=='semua'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=allsadmin()))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
         menu = "1. Lihat-[nrp]\n2. Tambah-[nrp]-[nama]-[alamat]\n3. Hapus-[nrp]\n4. Ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. Semua "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
