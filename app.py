@@ -90,11 +90,11 @@ def alladmin():
             nama = data['api_yemima'][int(i)][2]
             alamat = data['api_yemima'][int(i)][4]
             hasil=hasil+str(i+1)
-            hasil=hasil+".\nNRP : "
+            hasil=hasil+".\nnrp : "
             hasil=hasil+nrp
-            hasil=hasil+"\nNama : "
+            hasil=hasil+"\nnama : "
             hasil=hasil+nama
-            hasil=hasil+"\nAlamat : "
+            hasil=hasil+"\nalamat : "
             hasil=hasil+alamat
             hasil=hasil+"\n"
         return hasil
