@@ -126,7 +126,7 @@ def update(nrpLama,nrp,nama,alamat):
         flag = data['flag']
 
         if(flag == "1"):
-            return 'Data '+nrp_lama+'berhasil diupdate\n'
+            return 'Data '+nrp_lama+' berhasil diupdate\n'
         elif(flag == "0"):
             return 'Data gagal diupdate\n'
 
