@@ -164,7 +164,7 @@ def handle_message(event):
     elif(data[0]=='all'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
-        menu = "1. Lihat-[nrp]\n2. Tambah-[nrp]-[nama]-[alamat]\n3. Hapus-[nrp]\n4. Ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. Semua "
+        menu = "1. add-[nrp]\n2. show-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 
