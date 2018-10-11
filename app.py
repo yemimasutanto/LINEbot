@@ -58,7 +58,7 @@ def cariadmin(nrp):
 
         # munculin semua, ga rapi, ada 'u' nya
         # all_data = data['data_angkatan'][0]
-        data= "Nama : "+nama+"\nNrp : "+nrp+"\nAlamat : "+alamat
+        data= "nama : "+nama+"\nrp : "+nrp+"\nalamat : "+alamat
         return data
         # return all_data
 
@@ -67,7 +67,7 @@ def cariadmin(nrp):
 
 #INPUT DATA ADMIN RPL buat di app.py
 def inputadmin(nrp, nama, alamat):
-    r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'NRP': nrp, 'Nama': nama, 'Alamat': alamat})
+    r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     data = r.json()
 
     flag = data['flag']
@@ -90,11 +90,11 @@ def alladmin():
             nama = data['api_yemima'][int(i)][2]
             alamat = data['api_yemima'][int(i)][4]
             hasil=hasil+str(i+1)
-            hasil=hasil+".\nNRP : "
+            hasil=hasil+".\nnrp : "
             hasil=hasil+nrp
-            hasil=hasil+"\nNama : "
+            hasil=hasil+"\nnama : "
             hasil=hasil+nama
-            hasil=hasil+"\nAlamat : "
+            hasil=hasil+"\nalamat : "
             hasil=hasil+alamat
             hasil=hasil+"\n"
         return hasil
@@ -103,7 +103,7 @@ def alladmin():
 
 # #DELETE DATA ADMIN RPL
 def hapusadmin(nrp):
-    r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'NRP': nrp})
+    r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'nrp': nrp})
     data = r.json()
 
     flag = data['flag']
@@ -121,7 +121,7 @@ def updateadmin(nrpLama,nrp,nama,alamat):
     nrp_lama=nrpLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'NRP': nrp, 'Nama': nama, 'Alamat': alamat, 'NRP_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
@@ -153,18 +153,18 @@ def handle_message(event):
     profile = line_bot_api.get_profile(sender)
    
     data=text.split('-')
-    if(data[0]=='Tambah'):
+    if(data[0]=='add'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputadmin(data[1],data[2],data[3])))
-    elif(data[0]=='Lihat'):
+    elif(data[0]=='show'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cariadmin(data[1])))
-    elif(data[0]=='Hapus'):
+    elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusadmin(data[1])))
-    elif(data[0]=='Ganti'):
+    elif(data[0]=='replace'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updateadmin(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='Semua'):
+    elif(data[0]=='all'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
-        menu = "1. Lihat-[nrp]\n2. Tambah-[nrp]-[nama]-[alamat]\n3. Hapus-[nrp]\n4. Ganti-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. Semua "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
     else
         printf 'error\n'
