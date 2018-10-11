@@ -44,7 +44,7 @@ handler = WebhookHandler('a61ddb69c1ec8893792072096bd7ef02')
 notes = {}
 
 # #REQUEST DATA ADMIN RPL
-def cariadmin(nrp):
+def show(nrp):
     URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
     r = requests.get(URLadmin)
     data = r.json()
@@ -59,14 +59,14 @@ def cariadmin(nrp):
         # munculin semua, ga rapi, ada 'u' nya
         all_data = data['data_admin'][0]
         data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-        return data
-        # return all_data
+        #return data
+        return all_data
 
     elif(flag == "0"):
         return err
 
 #INPUT DATA ADMIN RPL buat di app.py
-def inputadmin(nrp, nama, alamat):
+def add(nrp, nama, alamat):
     r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     data = r.json()
 
@@ -102,7 +102,7 @@ def alladmin():
         return 'Data gagal dimasukkan\n'
 
 # #DELETE DATA ADMIN RPL
-def hapusadmin(nrp):
+def delete(nrp):
     r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'nrp': nrp})
     data = r.json()
 
@@ -113,7 +113,7 @@ def hapusadmin(nrp):
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
 
-def updateadmin(nrpLama,nrp,nama,alamat):
+def update(nrpLama,nrp,nama,alamat):
     URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
     r = requests.get(URLadmin)
     data = r.json()
@@ -154,17 +154,17 @@ def handle_message(event):
    
     data=text.split('-')
     if(data[0]=='add'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputadmin(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
     elif(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=cariadmin(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
     elif(data[0]=='delete'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusadmin(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updateadmin(data[1],data[2],data[3],data[4])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
     elif(data[0]=='all'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all admin "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 import os
