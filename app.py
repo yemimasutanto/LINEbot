@@ -48,7 +48,7 @@ def show(nrp):
     URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
     r = requests.get(URLadmin)
     data = r.json()
-    err = "data tidak ditemukan"
+    err = "Data tidak ditemukan"
     
     flag = data['flag']
     if(flag == "1"):
