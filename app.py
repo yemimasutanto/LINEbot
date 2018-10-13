@@ -59,8 +59,8 @@ def show(nrp):
         # munculin semua, ga rapi, ada 'u' nya
         #all_data = data['data_admin'][0]
         data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-        #return data
-        return all_data
+        return data
+        #return all_data
 
     elif(flag == "0"):
         return err
@@ -99,7 +99,7 @@ def alladmin():
             hasil=hasil+"\n"
         return hasil
     elif(flag == "0"):
-        #return 'Data gagal dimasukkan\n'
+        return 'Data gagal dimasukkan\n'
 
 # #DELETE DATA ADMIN RPL
 def delete(nrp):
@@ -153,10 +153,10 @@ def handle_message(event):
     profile = line_bot_api.get_profile(sender)
    
     data=text.split('-')
-    if(data[0]=='add'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
-    elif(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
+    if(data[0]=='show'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1])))
+    elif(data[0]=='add'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1],data[2],data[3])))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
