@@ -166,7 +166,10 @@ def handle_message(event):
     elif(data[0]=='/menu'):
         menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
-
+    else:
+        menu = "Perintah salah!\n1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all"
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
+        
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
