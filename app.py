@@ -87,8 +87,9 @@ def alladmin():
         for i in range(0,len(data['data_admin'])):
             nrp = data['data_admin'][i]['nrp']
             nama = data['data_admin'][i]['nama']
-            alamat = data['data_admin'][i)]['alamat']
-            print("nrp: " + nrp + " nama: " + nama + " alamat: " + alamat)
+            alamat = data['data_admin'][i]['alamat']
+            push_message
+            //print("nrp: " + nrp + " nama: " + nama + " alamat: " + alamat)
          
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
