@@ -84,10 +84,7 @@ def alladmin():
     flag = data['flag']
    
     if(flag == "1"):
-        josnlen = len(data['data_admin'])
-        print(josnlen)
-        i=0
-        for i in range(0,josnlen):
+        for i in range(0,len(data['data_admin'])):
             nrp = data['data_admin'][i]['nrp']
             nama = data['data_admin'][i]['nama']
             alamat = data['data_admin'][i)]['alamat']
