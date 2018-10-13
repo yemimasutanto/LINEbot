@@ -154,9 +154,9 @@ def handle_message(event):
    
     data=text.split('-')
     if(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
     elif(data[0]=='add'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
