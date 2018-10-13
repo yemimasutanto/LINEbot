@@ -57,10 +57,10 @@ def show(nrp):
         alamat = data['data_admin'][0]['alamat']
 
         # munculin semua, ga rapi, ada 'u' nya
-        #all_data = data['data_admin'][0]
+        all_data = data['data_admin'][0]
         data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-        return data
-        #return all_data
+        #return data
+        return all_data
 
     elif(flag == "0"):
         return err
