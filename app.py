@@ -57,10 +57,10 @@ def show(nrp):
         alamat = data['data_admin'][0]['alamat']
 
         # munculin semua, ga rapi, ada 'u' nya
-        all_data = data['data_admin'][0]
+        #all_data = data['data_admin'][0]
         data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-        #return data
-        return all_data
+        return data
+        #return all_data
 
     elif(flag == "0"):
         return err
@@ -85,21 +85,21 @@ def alladmin():
    
     if(flag == "1"):
         hasil = ""
-        for i in range(0,len(data['api_yemima'])):
+        for i in range(0,len(data['data_admin'])):
             nrp = data['data_admin'][int(i)][0]
             nama = data['data_admin'][int(i)][2]
             alamat = data['data_admin'][int(i)][4]
             hasil=hasil+str(i+1)
-            hasil=hasil+".\nnrp : "
+            hasil=hasil+".\nNrp : "
             hasil=hasil+nrp
-            hasil=hasil+"\nnama : "
+            hasil=hasil+"\nNama : "
             hasil=hasil+nama
-            hasil=hasil+"\nalamat : "
+            hasil=hasil+"\nAlamat : "
             hasil=hasil+alamat
             hasil=hasil+"\n"
         return hasil
     elif(flag == "0"):
-        return 'Data gagal dimasukkan\n'
+        #return 'Data gagal dimasukkan\n'
 
 # #DELETE DATA ADMIN RPL
 def delete(nrp):
