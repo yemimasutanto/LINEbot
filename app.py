@@ -98,9 +98,6 @@ def listadmin():
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# hehe=listadmin();
-# print(hehe)
-
 # #DELETE DATA ADMIN RPL
 def delete(nrp):
     r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'nrp': nrp})
