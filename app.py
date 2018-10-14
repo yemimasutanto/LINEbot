@@ -56,7 +56,7 @@ def show(nrp):
         nama = data['data_admin'][0]['nama']
         alamat = data['data_admin'][0]['alamat']
 
-        data= "Nama : "+nama+"\nNrp : "+nrp+"\nAlamat : "+alamat
+        data= "Nama : "+nama+"\nNRP : "+nrp+"\nAlamat : "+alamat
         return data
 
     elif(flag == "0"):
@@ -110,8 +110,8 @@ def delete(nrp):
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
 
-def update(nrpLama,nrp,nama,namabaru,alamat):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama + namabaru
+def update(nrpLama,nrp,nama,alamat):
+    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
     r = requests.get(URLadmin)
     data = r.json()
     err = "data tidak ditemukan"
@@ -119,7 +119,7 @@ def update(nrpLama,nrp,nama,namabaru,alamat):
     nama_baru=namabaru
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'nrp': nrp, 'nama': nama, 'namabaru':namabaru, 'alamat': alamat, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
