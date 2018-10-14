@@ -111,7 +111,6 @@ def delete(nrp):
         return 'Data gagal dihapus\n'
 
 def update(nrpLama,nrp,nama,alamat):
-    return "test"
     URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
 #     r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     r = requests.get(URLadmin)
@@ -131,7 +130,7 @@ def update(nrpLama,nrp,nama,alamat):
 
     elif(flag == "0"):
         return err
-
+    return "test"
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
