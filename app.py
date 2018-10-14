@@ -49,21 +49,6 @@ def show(nrp):
     r = requests.get(URLadmin)
     data = r.json()
     err = "Data tidak ditemukan"
-    
-    # flag = data['flag']
-    # if(flag == "1"):
-    #     nrp = data['data_admin'][0]['nrp']
-    #     nama = data['data_admin'][0]['nama']
-    #     alamat = data['data_admin'][0]['alamat']
-
-    #     # munculin semua, ga rapi, ada 'u' nya
-    #     all_data = data['data_admin'][0]
-    #     data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-    #     #return data
-    #     return all_data
-
-    # elif(flag == "0"):
-    #     return err
 
 #INPUT DATA ADMIN RPL buat di app.py
 def add(nrp, nama, alamat):
@@ -89,7 +74,6 @@ def listadmin():
             nrp = data['data_admin'][int (i)]['nrp']
             nama = data['data_admin'][int (i)]['nama']
             alamat = data['data_admin'][int (i)]['alamat']
-            print("List admin")
             hasil=hasil+str(i+1)
             hasil=hasil+".\nNrp : "
             hasil=hasil+nrp
