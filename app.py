@@ -50,20 +50,20 @@ def show(nrp):
     data = r.json()
     err = "Data tidak ditemukan"
     
-    flag = data['flag']
-    if(flag == "1"):
-        nrp = data['data_admin'][0]['nrp']
-        nama = data['data_admin'][0]['nama']
-        alamat = data['data_admin'][0]['alamat']
+    # flag = data['flag']
+    # if(flag == "1"):
+    #     nrp = data['data_admin'][0]['nrp']
+    #     nama = data['data_admin'][0]['nama']
+    #     alamat = data['data_admin'][0]['alamat']
 
-        # munculin semua, ga rapi, ada 'u' nya
-        #all_data = data['data_admin'][0]
-        data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
-        return data
-        #return all_data
+    #     # munculin semua, ga rapi, ada 'u' nya
+    #     all_data = data['data_admin'][0]
+    #     data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
+    #     #return data
+    #     return all_data
 
-    elif(flag == "0"):
-        return err
+    # elif(flag == "0"):
+    #     return err
 
 #INPUT DATA ADMIN RPL buat di app.py
 def add(nrp, nama, alamat):
@@ -84,13 +84,21 @@ def alladmin():
     flag = data['flag']
    
     if(flag == "1"):
+        hasil = ""
         for i in range(0,len(data['data_admin'])):
-            nrp = data['data_admin'][i]['nrp']
-            nama = data['data_admin'][i]['nama']
-            alamat = data['data_admin'][i]['alamat']
-            push_message
-            //print("nrp: " + nrp + " nama: " + nama + " alamat: " + alamat)
-         
+            nrp = data['data_admin'][int(i)][0]
+            nama = data['data_admin'][int(i)][2]
+            alamat = data['data_admin'][int(i)][4]
+            "List admin"
+            hasil=hasil+str(i+1)
+            hasil=hasil+".\nNrp : "
+            hasil=hasil+nrp
+            hasil=hasil+"\nNama : "
+            hasil=hasil+nama
+            hasil=hasil+"\nAlamat : "
+            hasil=hasil+alamat
+            hasil=hasil+"\n"
+        return hasil
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
@@ -106,15 +114,16 @@ def delete(nrp):
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
 
-def update(nrpLama,nrp,nama,alamat):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
+def update(nrpLama,nrp,nama,namabaru,alamat):
+    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama + namabaru
     r = requests.get(URLadmin)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
+    nama_baru=namabaru
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_yemima/update.php", data={'nrp': nrp, 'nama': nama, 'namabaru':namabaru, 'alamat': alamat, 'nrp_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
@@ -146,10 +155,10 @@ def handle_message(event):
     profile = line_bot_api.get_profile(sender)
    
     data=text.split('-')
-    if(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
-    elif(data[0]=='add'):
+    if(data[0]=='add'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
+    elif(data[0]=='show'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
@@ -157,12 +166,9 @@ def handle_message(event):
     elif(data[0]=='all'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all"
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all admin "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
-    else:
-        menu = "Perintah salah!\n1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all"
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
-        
+
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
