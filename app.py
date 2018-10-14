@@ -62,7 +62,7 @@ def add(nrp, nama, alamat):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-def alladmin():
+def listadmin():
     r = requests.post("http://www.aditmasih.tk/api_yemima/all.php")
     data = r.json()
 
@@ -148,10 +148,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='all'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=alladmin()))
+    elif(data[0]=='listadmin'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listadmin()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. all admin "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listadmin "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 import os
