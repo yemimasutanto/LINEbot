@@ -149,6 +149,54 @@ def handle_message(event):
     gid = event.source.sender_id #get group_id
     profile = line_bot_api.get_profile(sender)
    
+	carousel_template_message = TemplateSendMessage(
+	    alt_text='Carousel template',
+	    template=CarouselTemplate(
+	        columns=[
+	            CarouselColumn(
+	                thumbnail_image_url='https://www.wikihow.com/images_en/thumb/9/9e/Draw-SpongeBob-SquarePants-Step-18.jpg/v4-728px-Draw-SpongeBob-SquarePants-Step-18.jpg',
+	                title='this is menu1',
+	                text='description1',
+	                actions=[
+	                    PostbackAction(
+	                        label='postback1',
+	                        text='postback text1',
+	                        data='action=buy&itemid=1'
+	                    ),
+	                    MessageAction(
+	                        label='message1',
+	                        text='message text1'
+	                    ),
+	                    URIAction(
+	                        label='uri1',
+	                        uri='http://example.com/1'
+	                    )
+	                ]
+	            ),
+	            CarouselColumn(
+	                thumbnail_image_url='https://www.wikihow.com/images_en/thumb/9/9e/Draw-SpongeBob-SquarePants-Step-18.jpg/v4-728px-Draw-SpongeBob-SquarePants-Step-18.jpg',
+	                title='this is menu2',
+	                text='description2',
+	                actions=[
+	                    PostbackAction(
+	                        label='postback2',
+	                        text='postback text2',
+	                        data='action=buy&itemid=2'
+	                    ),
+	                    MessageAction(
+	                        label='message2',
+	                        text='message text2'
+	                    ),
+	                    URIAction(
+	                        label='uri2',
+	                        uri='http://example.com/2'
+	                    )
+	                ]
+	            )
+	        ]
+	    )
+	)
+   
     data=text.split('-')
     if(data[0]=='add'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
