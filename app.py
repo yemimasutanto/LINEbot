@@ -48,7 +48,7 @@ def show(nrp):
     URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
     r = requests.get(URLangkatan)
     data = r.json()
-    err = "Data tidak ditemukan"
+    #err = "Data tidak ditemukan"
 
     flag = data['flag']
     if(flag == "1"):
@@ -60,9 +60,9 @@ def show(nrp):
         return data
 
     elif(flag == "0"):
-        return err
+        return 0
 
-#INPUT DATA ANGKATAN
+#INPUT DATA ANGKATAN buat di app.py
 def add(nrp, nama, alamat):
     r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     data = r.json()
@@ -114,7 +114,7 @@ def update(nrpLama,nrp,nama,alamat):
     URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
     r = requests.get(URLangkatan)
     data = r.json()
-    err = "data tidak ditemukan"
+    #err = "data tidak ditemukan"
     nrp_lama=nrpLama
     flag = data['flag']
     if(flag == "1"):
@@ -128,7 +128,7 @@ def update(nrpLama,nrp,nama,alamat):
             return 'Data gagal diupdate\n'
 
     elif(flag == "0"):
-        return err
+        return 0
     
 # Post Request
 @app.route("/callback", methods=['POST'])
@@ -148,16 +148,28 @@ def handle_message(event):
     sender = event.source.user_id #get usesenderr_id
     gid = event.source.sender_id #get group_id
     profile = line_bot_api.get_profile(sender)
-   
+
     data=text.split('-')
     if(data[0]=='add'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3]))
     elif(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
+    	output = show(data[1])
+    	if(output == 0):
+    		line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+    			original_content_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg',
+			    preview_image_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg')
+		else:
+        	line_bot_api.reply_message(event.reply_token, TextSendMessage(text=output))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
+    	output = update(data[1],data[2],data[3],data[4])
+    	if(output == 0):
+    		line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+    			original_content_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg',
+			    preview_image_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg')
+		else:
+        	line_bot_api.reply_message(event.reply_token, TextSendMessage(text=output))
     elif(data[0]=='listangkatan'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listangkatan()))
     elif(data[0]=='/menu'):
@@ -168,4 +180,3 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
 app.run(host='0.0.0.0', port=port)
-
