@@ -48,7 +48,7 @@ def show(nrp):
     URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
     r = requests.get(URLangkatan)
     data = r.json()
-    #err = "Data tidak ditemukan"
+    err = "Data tidak ditemukan"
 
     flag = data['flag']
     if(flag == "1"):
@@ -60,7 +60,7 @@ def show(nrp):
         return data
 
     elif(flag == "0"):
-        return 0
+        return err
 
 #INPUT DATA ANGKATAN buat di app.py
 def add(nrp, nama, alamat):
@@ -153,14 +153,7 @@ def handle_message(event):
     if(data[0]=='add'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3]))
     elif(data[0]=='show'):
-    	output = show(data[1])
-    	if(output == 0):
-    		    line_bot_api.reply_message(event.reply_token,ImageSendMessage(
-			    original_content_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLEv8LlSP0rY-ifgxa19VdKD3MaZXTLUswtI2Jo9xfbj2dW317Ug.jpg',
-			    preview_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLEv8LlSP0rY-ifgxa19VdKD3MaZXTLUswtI2Jo9xfbj2dW317Ug.jpg')
-		else:
-
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=output))
+    	line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
