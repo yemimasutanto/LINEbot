@@ -156,9 +156,10 @@ def handle_message(event):
     	output = show(data[1])
     	if(output == 0):
     		    line_bot_api.reply_message(event.reply_token,ImageSendMessage(
-			    original_content_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy4Orbtu3k176H4Linjr2mKkJLrxSscejin-4wtsvo8nJrEFv_',
-			    preview_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy4Orbtu3k176H4Linjr2mKkJLrxSscejin-4wtsvo8nJrEFv_')
+			    original_content_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLEv8LlSP0rY-ifgxa19VdKD3MaZXTLUswtI2Jo9xfbj2dW317Ug.jpg',
+			    preview_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLEv8LlSP0rY-ifgxa19VdKD3MaZXTLUswtI2Jo9xfbj2dW317Ug.jpg')
 		else:
+
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=output))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
