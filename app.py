@@ -161,16 +161,13 @@ def handle_message(event):
     elif(data[0]=='listangkatan'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listangkatan()))
     elif(data[0]=='danlainlain'):
-        line_bot_api.reply_message(event.reply_token, ImageSendMessage(
-            original_content_url='http://78.media.tumblr.com/tumblr_m6rj1n0Rp11qfdyfzo1_500.jpg',
-            preview_image_url='http://78.media.tumblr.com/tumblr_m6rj1n0Rp11qfdyfzo1_500.jpg'))
+        line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url='http://78.media.tumblr.com/tumblr_m6rj1n0Rp11qfdyfzo1_500.jpg', preview_image_url='http://78.media.tumblr.com/tumblr_m6rj1n0Rp11qfdyfzo1_500.jpg'))
     elif(data[0]=='/menu'):
         menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listangkatan\n6. danlainlain"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
     else:
-        line_bot_api.reply_message(event.reply_token,ImageSendMessage(
-            original_content_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg',
-            preview_image_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg'))
+        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg', preview_image_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg'))
+
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
