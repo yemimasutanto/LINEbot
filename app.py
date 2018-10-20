@@ -43,12 +43,12 @@ handler = WebhookHandler('a61ddb69c1ec8893792072096bd7ef02')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-# #REQUEST DATA ADMIN RPL
+# #REQUEST DATA ANGKATAN
 def show(nrp):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
-    r = requests.get(URLadmin)
+    URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
+    r = requests.get(URLangkatan)
     data = r.json()
-    err = "Data tidak ditemukan"
+    #err = "Data tidak ditemukan"
 
     flag = data['flag']
     if(flag == "1"):
@@ -60,9 +60,9 @@ def show(nrp):
         return data
 
     elif(flag == "0"):
-        return err
+        return 0
 
-#INPUT DATA ADMIN RPL buat di app.py
+#INPUT DATA ANGKATAN buat di app.py
 def add(nrp, nama, alamat):
     r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     data = r.json()
@@ -74,7 +74,7 @@ def add(nrp, nama, alamat):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-def listadmin():
+def listangkatan():
     r = requests.post("http://www.aditmasih.tk/api_yemima/all.php")
     data = r.json()
 
@@ -98,7 +98,7 @@ def listadmin():
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# #DELETE DATA ADMIN RPL
+# #DELETE DATA ANGKATAN
 def delete(nrp):
     r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'nrp': nrp})
     data = r.json()
@@ -111,8 +111,8 @@ def delete(nrp):
         return 'Data gagal dihapus\n'
 
 def update(nrpLama,nrp,nama,alamat):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
-    r = requests.get(URLadmin)
+    URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
+    r = requests.get(URLangkatan)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
@@ -148,20 +148,26 @@ def handle_message(event):
     sender = event.source.user_id #get usesenderr_id
     gid = event.source.sender_id #get group_id
     profile = line_bot_api.get_profile(sender)
-   
+
     data=text.split('-')
     if(data[0]=='add'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=add(data[1],data[2],data[3]))
     elif(data[0]=='show'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=show(data[1])))
+    	output = show(data[1])
+    	if(output == 0):
+    		    line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+			    original_content_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy4Orbtu3k176H4Linjr2mKkJLrxSscejin-4wtsvo8nJrEFv_',
+			    preview_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy4Orbtu3k176H4Linjr2mKkJLrxSscejin-4wtsvo8nJrEFv_')
+		else:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=output))
     elif(data[0]=='delete'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='listadmin'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listadmin()))
+    elif(data[0]=='listangkatan'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listangkatan()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listadmin "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]-[notelp]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listangkatan "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 import os
