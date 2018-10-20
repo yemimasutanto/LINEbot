@@ -158,10 +158,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='listangkatan'):
+    elif(data[0]=='show_list'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listangkatan()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listangkatan "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. show_list "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
     else:
         line_bot_api.reply_message(event.reply_token,ImageSendMessage(
