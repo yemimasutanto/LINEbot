@@ -165,8 +165,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
     else:
         line_bot_api.reply_message(event.reply_token, ImageSendMessage(
-            original_content_url='http://goodyfeed.com/wp-content/uploads/2015/09/error404.jpg',
-            preview_image_url='http://goodyfeed.com/wp-content/uploads/2015/09/error404.jpg'))
+            original_content_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg',
+            preview_image_url='https://image.shutterstock.com/image-vector/error-404-page-not-found-450w-1027982980.jpg'))
 
 import os
 if __name__ == "__main__":
