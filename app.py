@@ -43,18 +43,18 @@ handler = WebhookHandler('a61ddb69c1ec8893792072096bd7ef02')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-# #REQUEST DATA ADMIN RPL
+# #REQUEST DATA ANGKATAN
 def show(nrp):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
-    r = requests.get(URLadmin)
+    URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrp
+    r = requests.get(URLangkatan)
     data = r.json()
     err = "Data tidak ditemukan"
 
     flag = data['flag']
     if(flag == "1"):
-        nrp = data['data_admin'][0]['nrp']
-        nama = data['data_admin'][0]['nama']
-        alamat = data['data_admin'][0]['alamat']
+        nrp = data['database_angkatan'][0]['nrp']
+        nama = data['database_angkatan'][0]['nama']
+        alamat = data['database_angkatan'][0]['alamat']
 
         data= "Nama : "+nama+"\nNRP : "+nrp+"\nAlamat : "+alamat
         return data
@@ -62,7 +62,7 @@ def show(nrp):
     elif(flag == "0"):
         return err
 
-#INPUT DATA ADMIN RPL buat di app.py
+#INPUT DATA ANGKATAN
 def add(nrp, nama, alamat):
     r = requests.post("http://www.aditmasih.tk/api_yemima/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
     data = r.json()
@@ -74,7 +74,7 @@ def add(nrp, nama, alamat):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-def listadmin():
+def listangkatan():
     r = requests.post("http://www.aditmasih.tk/api_yemima/all.php")
     data = r.json()
 
@@ -82,10 +82,10 @@ def listadmin():
    
     if(flag == "1"):
         hasil = ""
-        for i in range(0,len(data['data_admin'])):
-            nrp = data['data_admin'][int (i)]['nrp']
-            nama = data['data_admin'][int (i)]['nama']
-            alamat = data['data_admin'][int (i)]['alamat']
+        for i in range(0,len(data['database_angkatan'])):
+            nrp = data['database_angkatan'][int (i)]['nrp']
+            nama = data['database_angkatan'][int (i)]['nama']
+            alamat = data['database_angkatan'][int (i)]['alamat']
             hasil=hasil+str(i+1)
             hasil=hasil+".\nNrp : "
             hasil=hasil+nrp
@@ -98,7 +98,7 @@ def listadmin():
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
 
-# #DELETE DATA ADMIN RPL
+# #DELETE DATA ANGKATAN
 def delete(nrp):
     r = requests.post("http://www.aditmasih.tk/api_yemima/delete.php", data={'nrp': nrp})
     data = r.json()
@@ -111,8 +111,8 @@ def delete(nrp):
         return 'Data gagal dihapus\n'
 
 def update(nrpLama,nrp,nama,alamat):
-    URLadmin = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
-    r = requests.get(URLadmin)
+    URLangkatan = "http://www.aditmasih.tk/api_yemima/show.php?nrp=" + nrpLama
+    r = requests.get(URLangkatan)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
@@ -158,10 +158,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=delete(data[1])))
     elif(data[0]=='replace'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=update(data[1],data[2],data[3],data[4])))
-    elif(data[0]=='listadmin'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listadmin()))
+    elif(data[0]=='listangkatan'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=listangkatan()))
     elif(data[0]=='/menu'):
-        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listadmin "
+        menu = "1. show-[nrp]\n2. add-[nrp]-[nama]-[alamat]\n3. delete-[nrp]\n4. replace-[nrp lama]-[nrp baru]-[nama baru]-[alamat baru]\n5. listangkatan "
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=menu))
 
 import os
